@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>もぐらたたきゲーム</title>
+<link rel="stylesheet" href="mogustyle.css">
+</head>
+<body>
+	<div align="center">
+	<h1>もぐらたたきゲーム</h1>
+	<h1 id="point">0</h1>
+	<div id="info">残り時間:<span id="count">10</span>
+	<table id="a">
+		<tbody>
+			<tr><td id="b1"></td><td id="b2"></td><td id="b3"></td></tr>
+			<tr><td id="b4"></td><td id="b5"></td><td id="b6"></td></tr>
+			<tr><td id="b7"></td><td id="b8"></td><td id="b9"></td></tr>
+		</tbody>
+	</table>
+	<div id="message"></div>
+	</div>
+	<script>
+		window.onload = function() {
+			
+		   var count = 10;
+		   var countdown = function(){
+			
+			document.getElementById('count').textContent=count;
+			count--;
+			console.log(count);
+
+			var id = setTimeout(countdown, 1000);
+			if(count < 0){　
+			  clearTimeout(id);//idをclearTimeoutで指定している
+			}
+
+		  }
+		  countdown();
+		
+			//9個のマスのID
+			var ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9'];
+		
+			//ランダムにモグラを出す処理
+			function moguraDasu()
+			{
+				//10%ぐらいの確率でモグラを出すことにする
+				if (Math.random() < 0.1) {
+					var masu = document.getElementById(ids[Math.floor(Math.random()*9)]);
+					//ただしモグラを出すのはモグラがいないマス
+					if (masu.innerHTML == '') {
+						masu.innerHTML = '<img src="mogura.png", width = 70, height=75, id="mogu">';
+						setTimeout(function(){moguraKakusu(masu);}, 1000);
+					}
+					if(count <0){
+						return false;
+					}
+				}
+			}
+		
+			//出したモグラを隠す処理
+			function moguraKakusu(masu)
+			{
+				masu.innerHTML = '';
+			}
+		
+		var x = 0;
+			//たたいた時の処理
+			function tataita(e)
+			{
+				if (e.target.id == 'mogu') {
+					x +=10;
+					document.getElementById('message').innerHTML = '○ あたり！';
+					e.target.innerHTML = '';
+					document.getElementById('point').innerHTML = x;   
+				} else {
+					x -=10;
+					document.getElementById('message').innerHTML = '× はずれ！';
+					document.getElementById('point').innerHTML = x;
+				}
+			}
+			//各マスをたたいたときに実行するよう設定しておく
+			document.getElementById('b1').addEventListener('click', tataita);
+			document.getElementById('b2').addEventListener('click', tataita);
+			document.getElementById('b3').addEventListener('click', tataita);
+			document.getElementById('b4').addEventListener('click', tataita);
+			document.getElementById('b5').addEventListener('click', tataita);
+			document.getElementById('b6').addEventListener('click', tataita);
+			document.getElementById('b7').addEventListener('click', tataita);
+			document.getElementById('b8').addEventListener('click', tataita);
+			document.getElementById('b9').addEventListener('click', tataita);
+			
+		
+		//モグラを出す処理を呼ぶ（1回目）
+		moguraDasu();
+			//そのあとも0.3秒ごとに呼ぶ
+			setInterval(moguraDasu, 300);
+		
+		}
+		</script>
+</body>
+</html>
