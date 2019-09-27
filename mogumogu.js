@@ -27,7 +27,7 @@ window.onload = function() {
     /**
      * メソッド領域
      */
-    //プレイ時間を設定
+    //プレイ時間を減少させる（値がマイナスになるので要修正）
 	function countdown(){
 				document.getElementById('count').textContent=count;
 				count--;
@@ -38,48 +38,50 @@ window.onload = function() {
                 //カウントが0になったらカウントをストップする
                 if(count < 0){　
 					  clearTimeout(id);//idをclearTimeoutで指定している
-			  		document.getElementById('owari').textContent = "おわりです( ;∀;)";
-				}
-            }
+                      document.getElementById('owari').textContent = "GAME OVER";
+                      document.getElementById('score').textContent = "★あなたの得点は" + x + "点でした★";
+                }
+                
+    }
              
 
-
-			//ランダムにモグラを出す処理
-			function moguraDasu()
-			{
-                if(count < 0){clearInterval(tiID);}
-
-					//30%ぐらいの確率でモグラを出すことにする
-					if (Math.random() < 0.3) {
-						var masu = document.getElementById(ids[Math.floor(Math.random()*9)]);
-						//ただしモグラを出すのはモグラがいないマス
-						if (masu.innerHTML == '') {
-							masu.innerHTML = '<img src="mogura.png", width = 70, height=75, id="mogu">';
-							setTimeout(function(){moguraKakusu(masu);}, 1000);
-						}
-                    } 
-                    
-            }
-		
-			//出したモグラを隠す処理
-			function moguraKakusu(masu)
-			{
-				masu.innerHTML = '';
-			}
-			//たたいた時の処理
-			function tataita(e)
-			{
-				if (e.target.id == 'mogu') {
-					x +=10;
-					document.getElementById('message').innerHTML = '○ あたり！';
-					e.target.innerHTML = '';
-					document.getElementById('point').innerHTML = x;   
-				} else {
-					x -=10;
-					document.getElementById('message').innerHTML = '× はずれ！';
-					document.getElementById('point').innerHTML = x;
+	//ランダムにモグラを出す処理
+	function moguraDasu()
+	{
+        if(count < 0){clearInterval(tiID);}
+			//30%ぐらいの確率でモグラを出すことにする
+			if (Math.random() < 0.3) {
+				var masu = document.getElementById(ids[Math.floor(Math.random()*9)]);
+				//ただしモグラを出すのはモグラがいないマス
+				if (masu.innerHTML == '') {
+					masu.innerHTML = '<img src="mogura.png", width = 70, height=75, id="mogu">';
+					setTimeout(function(){moguraKakusu(masu);}, 1000);
 				}
-			}
-
-
+            } 
+                    
+    }
+        
+    
+	//出したモグラを隠す処理
+	function moguraKakusu(masu)
+	{
+		masu.innerHTML = '';
+	}
+            
+    //たたいた時の処理
+	function tataita(e)
+	{
+		if (e.target.id == 'mogu') {
+			x +=10;
+			document.getElementById('message').innerHTML = '○ あたり！';
+			e.target.innerHTML = '';
+			document.getElementById('point').innerHTML = x;   
+			} else {
+				x -=10;
+				document.getElementById('message').innerHTML = '× はずれ！';
+				document.getElementById('point').innerHTML = x;
 		}
+	}
+
+
+}
