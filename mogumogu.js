@@ -81,6 +81,6 @@ window.onload = function() {
 		if(count < 0){
 			return false;
 		}
-		document.getElementById('point').innerHTML = total;
+		document.getElementById('point').innerHTML = 'Score：' +total;
 		}
 	}
