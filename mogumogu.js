@@ -2,7 +2,7 @@ window.onload = function() {
 
     //グローバル変数
     var count = 10; //プレイ時間
-    var x = 0; //点数
+    var total = 0; //点数
     var ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9'];　//9個のマスのID
     
     //モグラを出す処理
@@ -39,12 +39,10 @@ window.onload = function() {
                 if(count < 0){　
 					  clearTimeout(id);//idをclearTimeoutで指定している
                       document.getElementById('owari').textContent = "GAME OVER";
-                      document.getElementById('score').textContent = "★あなたの得点は" + x + "点でした★";
-                }
-                
+					  document.getElementById('score').textContent = "★あなたの得点は" + total + "点でした★";
+					}
     }
              
-
 	//ランダムにモグラを出す処理
 	function moguraDasu()
 	{
@@ -57,11 +55,9 @@ window.onload = function() {
 					masu.innerHTML = '<img src="mogura.png", width = 70, height=75, id="mogu">';
 					setTimeout(function(){moguraKakusu(masu);}, 1000);
 				}
-            } 
-                    
-    }
-        
-    
+			}
+	    
+}
 	//出したモグラを隠す処理
 	function moguraKakusu(masu)
 	{
@@ -72,16 +68,19 @@ window.onload = function() {
 	function tataita(e)
 	{
 		if (e.target.id == 'mogu') {
-			x +=10;
+			total +=10;
 			document.getElementById('message').innerHTML = '○ あたり！';
 			e.target.innerHTML = '';   
 		} else {
-				x -=10;
+				total -=10;
 				document.getElementById('message').innerHTML = '× はずれ！';
 		}
-		if (x < 0) {
-			x = 0;
+		if (total < 0) {
+			total = 0;
 		}
-		document.getElementById('point').innerHTML = x;
+		if(count < 0){
+			return false;
+		}
+		document.getElementById('point').innerHTML = total;
 		}
 	}
