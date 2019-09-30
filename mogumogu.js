@@ -74,14 +74,14 @@ window.onload = function() {
 		if (e.target.id == 'mogu') {
 			x +=10;
 			document.getElementById('message').innerHTML = '○ あたり！';
-			e.target.innerHTML = '';
-			document.getElementById('point').innerHTML = x;   
-			} else {
+			e.target.innerHTML = '';   
+		} else {
 				x -=10;
 				document.getElementById('message').innerHTML = '× はずれ！';
-				document.getElementById('point').innerHTML = x;
+		}
+		if (x < 0) {
+			x = 0;
+		}
+		document.getElementById('point').innerHTML = x;
 		}
 	}
-
-
-}
